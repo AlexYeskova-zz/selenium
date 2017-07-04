@@ -4,24 +4,28 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class GoogleSearchResultPage {
+public class GoogleSearchResultPage extends GoogleBasePage {
 
-    private WebDriver webDriver;
-    @FindBy(xpath = ".//*[@id='rso']/div[2]/div/div[1]/div/div/h3/a")
-    //By linkLocator = By.xpath(".//*[@id='rso']/div[2]/div/div[1]/div/div/h3/a");
+    //@FindBy(xpath = ".//*[@id='rso']/div[2]/div/div[1]/div/div/h3/a")
+    By linkLocator = By.xpath(".//*[@id='rso']/div[2]/div/div[1]/div/div/h3/a");
     private WebElement link;
 
     public GoogleSearchResultPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+        super(webDriver);
+
     }
 
     public String getLinkText(){
-        //link = webDriver.findElement(linkLocator);
+        link  = webDriverUtil.waitForExpectedCondition(
+                ExpectedConditions.visibilityOfElementLocated(linkLocator));
         return link.getText();
     }
 
     public void clickLink(){
-        link.click();
+
+        webDriverUtil.jsClick("gb_70", "id");
     }
 }
